@@ -47,9 +47,9 @@ public class mainDriver extends LinearOpMode {
 
     public static double lastPoint = 0;
 
-    private double[]testX = {0,25,50};
-    private double[]testY = {0,25,0};
-    private double[]testHeading = {bestAngle,bestAngle,bestAngle};
+    private double[]testX = {0,25,25,0};
+    private double[]testY = {0,25,25,50};
+    private double[]testHeading = {bestAngle,bestAngle,bestAngle,0};
 
     private double[] xCoordinates1 = {15,8,0,-10};
     private double [] yCoordinates1 = {36,50,53,56};
@@ -66,7 +66,7 @@ public class mainDriver extends LinearOpMode {
     public void runOpMode() {
 
 
-        while (!opModeIsActive() && !isStopRequested()) {
+
             // goToPosition = new MotorPowerMecanum();
             // pid = new PIDCalulations();
 
@@ -110,7 +110,8 @@ public class mainDriver extends LinearOpMode {
             rightBackWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
             coordinatePositionUpdate(verticalLeftPosition, verticalRightPosition, horizontalPosition);
-        }
+
+            waitForStart();
 
         if (opModeIsActive()) {
             /*heading = globalPositionUpdate.robotOrientationRadians;
@@ -135,7 +136,7 @@ public class mainDriver extends LinearOpMode {
             go(xCoordinates4i, yCoordinates4i, headings4i);*/
 
             go(testX,testY,testHeading);
-            sleep(10000);
+
         }
 
     }
@@ -183,7 +184,7 @@ public class mainDriver extends LinearOpMode {
             telemetry.addData("d", d);
             telemetry.addData("changeInError", changeInError);
             telemetry.update();
-        } while (powers[6] < 15 || powers[4] > 1.2 || d > 0.001);
+        } while (opModeIsActive() & powers[6] < 15 || powers[4] > 1.2 || d > 0.001);
 
         // stop
         setPower(0, 0, 0, 0);

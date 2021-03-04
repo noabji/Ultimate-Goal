@@ -73,7 +73,7 @@ public class calculations {
 
         if(desiredHeading[coordinateNumber] != 1000) {
             distanceToTurn = desiredHeading[coordinateNumber] - Math.toDegrees(globalHeading);
-        }  else if (c > 3 && desiredHeading[coordinateNumber] == 1000){
+        }  else if (c > 6 && desiredHeading[coordinateNumber] == 1000){
             distanceToTurn = Math.toDegrees(Math.atan2(xPowerRatio,yPowerRatio)) - Math.toDegrees(globalHeading);
         } else {
             distanceToTurn = 0;
