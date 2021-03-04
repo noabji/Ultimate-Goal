@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import java.util.Arrays;
 
+import static android.icu.lang.UProperty.MATH;
 import static org.firstinspires.ftc.teamcode.Odometry_Monish.mainDriver.coordinateNumber;
 import static org.firstinspires.ftc.teamcode.Odometry_Monish.mainDriver.globalHeading;
 import static org.firstinspires.ftc.teamcode.Odometry_Monish.mainDriver.globalXPosEncoderTicks;
@@ -59,7 +60,7 @@ public class calculations {
 
         arraySize = desiredHeading.length - 1;
 
-        if (c < 6 && coordinateNumber != arraySize) {
+        if (c < 3 && coordinateNumber != arraySize) {
             coordinateNumber += 1;
         } if (coordinateNumber > arraySize) {
             coordinateNumber = arraySize;
@@ -70,8 +71,13 @@ public class calculations {
         }
 
 
-
-        distanceToTurn = desiredHeading[coordinateNumber] - Math.toDegrees(globalHeading);
+        if(desiredHeading[coordinateNumber] != 1000) {
+            distanceToTurn = desiredHeading[coordinateNumber] - Math.toDegrees(globalHeading);
+        }  else if (c > 3 && desiredHeading[coordinateNumber] == 1000){
+            distanceToTurn = Math.toDegrees(Math.atan2(xPowerRatio,yPowerRatio)) - Math.toDegrees(globalHeading);
+        } else {
+            distanceToTurn = 0;
+        }
         turnPower = distanceToTurn / 360 * circumference;
         return driveMecanum(xPowerRatio, yPowerRatio, turnPower, 0, arraySize, coordinateNumber, lastPoint);
 

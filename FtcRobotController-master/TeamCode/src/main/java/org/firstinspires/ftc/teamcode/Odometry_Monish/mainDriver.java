@@ -41,13 +41,19 @@ public class mainDriver extends LinearOpMode {
     static double pidOutput;
     public static double verticalLeftPosition, verticalRightPosition, horizontalPosition;
 
+    public static double bestAngle = 1000;
+
     public static int coordinateNumber = 0;
 
     public static double lastPoint = 0;
 
+    private double[]testX = {0,25,50};
+    private double[]testY = {0,25,0};
+    private double[]testHeading = {bestAngle,bestAngle,bestAngle};
+
     private double[] xCoordinates1 = {15,8,0,-10};
     private double [] yCoordinates1 = {36,50,53,56};
-    private double [] headings1 = {0,0,0,0};
+    private double [] headings1 = {bestAngle,bestAngle,bestAngle,0};
 
     private double [] xCoordinates2 = {-12};
     private double [] yCoordinates2 = {61};
@@ -111,11 +117,11 @@ public class mainDriver extends LinearOpMode {
             globalXPosEncoderTicks = globalPositionUpdate.returnXCoordinate();
             globalYPosEncoderTicks = globalPositionUpdate.returnYCoordinate();*/
 
-            go(xCoordinates1, yCoordinates1, headings1);
+            /*go(xCoordinates1, yCoordinates1, headings1);
             sleep(2000);
             go(xCoordinates2, yCoordinates2, headings2);
             sleep(400);
-            go(xCoordinates3, yCoordinates3, headings3);
+            go(xCoordinates3, yCoordinates3, headings3);*/
 
 
 
@@ -128,6 +134,8 @@ public class mainDriver extends LinearOpMode {
             intakeOn();
             go(xCoordinates4i, yCoordinates4i, headings4i);*/
 
+            go(testX,testY,testHeading);
+            sleep(10000);
         }
 
     }
@@ -165,6 +173,7 @@ public class mainDriver extends LinearOpMode {
             powers = calculations.goToPositionCalculations(x, y, heading);
             setPower(powers[0]*powers[5], powers[1]*powers[5], powers[2]*powers[5], powers[3]*powers[5]);
             telemetry.addData("final point", powers[6]);
+            telemetry.addData("coordinateNumber", coordinateNumber);
             telemetry.addData("c", powers[4]);
             telemetry.addData("globalX", globalXPosEncoderTicks/COUNTS_PER_INCH);
             telemetry.addData("globalY", globalYPosEncoderTicks/COUNTS_PER_INCH);
